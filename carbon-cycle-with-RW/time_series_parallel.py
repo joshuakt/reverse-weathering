@@ -176,13 +176,26 @@ confidence_Si_ratio =scipy.stats.scoreatpercentile(RW_abio_ratio,[low_c,mid_c,hi
 all_output[4,:,0]=all_output[4,:,0]/1e9 # Convert time axis from years to Ga
 
 ##### for comparison load model outputs from Krissansen-Totton et al. (2018; PNAS) with no RW:
-original_outputs = numpy.load('noRW_outputs.npy')
-original_pH_o=scipy.stats.scoreatpercentile(original_outputs[5,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # ocean pH
-original_CO2o=scipy.stats.scoreatpercentile(original_outputs[6,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # atmospheric pCO2
-original_Volc=scipy.stats.scoreatpercentile(original_outputs[24,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Volcanic outgassing flux
-original_Tsurf=scipy.stats.scoreatpercentile(original_outputs[17,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Average surface temperature
-original_Fs=scipy.stats.scoreatpercentile(original_outputs[20,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Continental silicate weathering flux
-original_Fd=scipy.stats.scoreatpercentile(original_outputs[19,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Seafloor dissolution flux
+#original_outputs = numpy.load('noRW_outputs.npy')
+#original_pH_o=scipy.stats.scoreatpercentile(original_outputs[5,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # ocean pH
+#numpy.save('original_pH_o',original_pH_o)
+original_time = numpy.load('original_time.npy')
+original_pH_o = numpy.load('original_pH_o.npy')
+#original_CO2o=scipy.stats.scoreatpercentile(original_outputs[6,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # atmospheric pCO2
+#numpy.save('original_CO2o',original_CO2o)
+original_CO2o = numpy.load('original_CO2o.npy')
+#original_Volc=scipy.stats.scoreatpercentile(original_outputs[24,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Volcanic outgassing flux
+#numpy.save('original_Volc',original_Volc)
+original_Volc = numpy.load('original_Volc.npy')
+#original_Tsurf=scipy.stats.scoreatpercentile(original_outputs[17,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Average surface temperature
+#numpy.save('original_Tsurf',original_Tsurf)
+original_Tsurf = numpy.load('original_Tsurf.npy')
+#original_Fs=scipy.stats.scoreatpercentile(original_outputs[20,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Continental silicate weathering flux
+#numpy.save('original_Fs',original_Fs)
+original_Fs = numpy.load('original_Fs.npy')
+#original_Fd=scipy.stats.scoreatpercentile(original_outputs[19,:,:],[low_c,mid_c,high_c], interpolation_method='fraction',axis=1) # Seafloor dissolution flux
+#numpy.save('original_Fd',original_Fd)
+original_Fd = numpy.load('original_Fd.npy')
 
 #################################
 ### Plotting figures #############
@@ -198,9 +211,9 @@ pylab.subplot(3, 3, 1)
 pylab.plot(all_output[4,:,0],confidence_pH_o[1],'k',linewidth=2.5, label='This study') # plot median ocean pH
 pylab.fill_between(all_output[4,:,0], confidence_pH_o[0], confidence_pH_o[2], color='grey', alpha='0.4') #plot ocean pH confidence interval
 # No RW results
-pylab.plot(original_outputs[4,:,0],original_pH_o[1],'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
-pylab.plot(original_outputs[4,:,0],original_pH_o[0],'b--')
-pylab.plot(original_outputs[4,:,0],original_pH_o[2],'b--')
+pylab.plot(original_time,original_pH_o[1],'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
+pylab.plot(original_time,original_pH_o[0],'b--')
+pylab.plot(original_time,original_pH_o[2],'b--')
 ##
 pylab.xlabel('Time (Ga)')
 pylab.ylabel('Ocean pH')
@@ -217,9 +230,9 @@ pylab.subplot(3, 3, 2)
 pylab.semilogy(all_output[4,:,0],confidence_CO2o[1],'k',linewidth=2.5, label='This study')
 pylab.fill_between(all_output[4,:,0], confidence_CO2o[0], confidence_CO2o[2], color='grey', alpha='0.4')
 #No RW results
-pylab.plot(original_outputs[4,:,0],original_CO2o[1],'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
-pylab.plot(original_outputs[4,:,0],original_CO2o[0],'b--')
-pylab.plot(original_outputs[4,:,0],original_CO2o[2],'b--')
+pylab.plot(original_time,original_CO2o[1],'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
+pylab.plot(original_time,original_CO2o[0],'b--')
+pylab.plot(original_time,original_CO2o[2],'b--')
 ##
 ### Literature proxies for comparison
 Sheldon_CO2_low=numpy.array([8.2,7.67,10.1,15.,0.6,2.2])*370*ppCO2 # lower limit Sheldon 2006
@@ -253,9 +266,9 @@ pylab.subplot(3,3,3)
 pylab.plot(all_output[4,:,0],confidence_Volc[1]/1e12,'k',linewidth=2.5, label='This study') # plot median outgassing flux
 pylab.fill_between(all_output[4,:,0], confidence_Volc[0]/1e12, confidence_Volc[2]/1e12, color='grey', alpha='0.4') #outgassing flux confidence interval
 #No RW results
-pylab.plot(original_outputs[4,:,0],original_Volc[1]/1e12,'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
-pylab.plot(original_outputs[4,:,0],original_Volc[0]/1e12,'b--')
-pylab.plot(original_outputs[4,:,0],original_Volc[2]/1e12,'b--')
+pylab.plot(original_time,original_Volc[1]/1e12,'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
+pylab.plot(original_time,original_Volc[0]/1e12,'b--')
+pylab.plot(original_time,original_Volc[2]/1e12,'b--')
 ##
 pylab.ylabel('Outgassing (Tmol/yr)')
 pylab.xlabel('Time (Ga)')
@@ -270,9 +283,9 @@ pylab.subplot(3, 3, 4)
 pylab.plot(all_output[4,:,0],confidence_Tsurf[1],'k',linewidth=2.5, label='This study') # plot median surface temperature
 pylab.fill_between(all_output[4,:,0], confidence_Tsurf[0], confidence_Tsurf[2], color='grey', alpha='0.4') # plot confidence interval surface temperature
 #No RW results
-pylab.plot(original_outputs[4,:,0],original_Tsurf[1],'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
-pylab.plot(original_outputs[4,:,0],original_Tsurf[0],'b--')
-pylab.plot(original_outputs[4,:,0],original_Tsurf[2],'b--')
+pylab.plot(original_time,original_Tsurf[1],'b',linewidth=2.5,label='No reverse weath. KT18') # plot median ocean pH
+pylab.plot(original_time,original_Tsurf[0],'b--')
+pylab.plot(original_time,original_Tsurf[2],'b--')
 ##
 pylab.ylabel('Temperature (K)')
 pylab.xlabel('Time (Ga)')
@@ -298,9 +311,9 @@ pylab.plot(all_output[4,:,0],confidence_Freverse[1]/1e12,'r',label='Reverse weat
 pylab.fill_between(all_output[4,:,0], confidence_Fs[0]/1e12, confidence_Fs[2]/1e12, color='grey', alpha='0.4') # plot confidence interval
 pylab.fill_between(all_output[4,:,0], confidence_Freverse[0]/1e12, confidence_Freverse[2]/1e12, color='red', alpha='0.4') # plot confidence interval
 #No RW results
-pylab.plot(original_outputs[4,:,0],original_Fs[1]/1e12,'b',linewidth=2.5, label='Cont. weath. KT18') # plot median ocean pH
-pylab.plot(original_outputs[4,:,0],original_Fs[0]/1e12,'b--')
-pylab.plot(original_outputs[4,:,0],original_Fs[2]/1e12,'b--')
+pylab.plot(original_time,original_Fs[1]/1e12,'b',linewidth=2.5, label='Cont. weath. KT18') # plot median ocean pH
+pylab.plot(original_time,original_Fs[0]/1e12,'b--')
+pylab.plot(original_time,original_Fs[2]/1e12,'b--')
 ##
 pylab.ylabel('Continental weathering flux (Tmol/yr)')
 pylab.xlabel('Time (Ga)')  
@@ -314,9 +327,9 @@ pylab.subplot(3, 3, 6)
 pylab.plot(all_output[4,:,0],confidence_Fd[1]/1e12,'k',linewidth=2.5,label='Seafloor weath. this study') # plot median seafloor dissolution
 pylab.fill_between(all_output[4,:,0], confidence_Fd[0]/1e12, confidence_Fd[2]/1e12, color='grey', alpha='0.4') # plot seafloor dissolution confidence intervals
 #No RW results
-pylab.plot(original_outputs[4,:,0],original_Fd[1]/1e12,'b',linewidth=2.5,label='Seafloor weath. KT18') # plot median ocean pH
-pylab.plot(original_outputs[4,:,0],original_Fd[0]/1e12,'b--')
-pylab.plot(original_outputs[4,:,0],original_Fd[2]/1e12,'b--')
+pylab.plot(original_time,original_Fd[1]/1e12,'b',linewidth=2.5,label='Seafloor weath. KT18') # plot median ocean pH
+pylab.plot(original_time,original_Fd[0]/1e12,'b--')
+pylab.plot(original_time,original_Fd[2]/1e12,'b--')
 ##
 Nakamura_Kato_date=numpy.array([3.46]) # Age of Nakamura and Kato seafloor carbonate mesaurements (Ga)
 Nakamura_Kato_low=numpy.array([7.6e12])/1e12 # See Appendix D for lower bound calculation

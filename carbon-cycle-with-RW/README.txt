@@ -53,7 +53,7 @@ Contains functions for abiotic silica precipitation, biotic silica precipitation
 %% Other files included in the code:
 - Halevy_Bachan_high.txt and Halevy_Bachan_low.txt are ocean pH estimates from Halevy and Bachan than are plotted along our model outputs for compairson
 - options_array.npy is an array created by the code for storing user choices about parallelization, methane, iteration number, and carbon chemistry precision.
-- noRW_outputs.npy - nominal model outputs from Krissansen-Totton et al. (2018) to compare to no reverse weathering case
+- original_XXX.npy - nominal model outputs from Krissansen-Totton et al. (2018) to compare to no reverse weathering case
 - Conley_data.txt - Estimates of ocean dissolved silica through time from Conley et al.
 END EXPLANATION OF CODE STRUCTURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
